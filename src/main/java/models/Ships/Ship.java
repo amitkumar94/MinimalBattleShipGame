@@ -34,4 +34,15 @@ public abstract class Ship {
 
     }
 
+    public boolean isSunk(){
+        boolean shouldSunk = true;
+        for(Map.Entry<Coordinate, ShipState> e : occupiedCoordinates.entrySet()){
+            if(e.getValue().equals(ShipState.HEALTHY)){
+                shouldSunk = false;
+                break;
+            }
+        }
+        return shouldSunk;
+    }
+
 }
