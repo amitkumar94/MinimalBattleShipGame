@@ -12,6 +12,38 @@ public abstract class Ship {
     ShipOrientation shipOrientation;
     HashMap<Coordinate, ShipState> occupiedCoordinates;
 
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public ShipType getShipType() {
+        return shipType;
+    }
+
+    public void setShipType(ShipType shipType) {
+        this.shipType = shipType;
+    }
+
+    public ShipOrientation getShipOrientation() {
+        return shipOrientation;
+    }
+
+    public void setShipOrientation(ShipOrientation shipOrientation) {
+        this.shipOrientation = shipOrientation;
+    }
+
+    public HashMap<Coordinate, ShipState> getOccupiedCoordinates() {
+        return occupiedCoordinates;
+    }
+
+    public void setOccupiedCoordinates(HashMap<Coordinate, ShipState> occupiedCoordinates) {
+        this.occupiedCoordinates = occupiedCoordinates;
+    }
+
     public Ship(){
         occupiedCoordinates = new HashMap<>();
     }
