@@ -29,15 +29,27 @@ public class Player {
 
           fleet  = new HashMap<>();
           random = new Random();
+          drawBoard();
+    }
+
+    public String getPlayerId(){
+        return playerId;
     }
 
     public boolean buildFleet(Coordinate starting, ShipOrientation orientation, ShipType shipType){
         if(fleet.containsKey(shipType))return false;
+
         Ship ship = ShipFactory.createShip(shipType, orientation);
         ship.assignCoordinates(starting);
-
+        for(Map.Entry<Coordinate, ShipState> e : ship.getOccupiedCoordinates().entrySet()){
+            Coordinate c  = e.getKey();
+            if(c.getRow() < 0 || c.getRow() >= BoardConstants.boardLen || c.getCol() < 0 ||
+                    c.getCol() >= BoardConstants.boardWidth){
+                return false;
+            }
+        }
         for(Coordinate c : ship.getOccupiedCoordinates().keySet()){
-            if(selfBoard.containsKey(c))return false;
+            if(selfBoard.get(c) != BoardConstants.selfBoardEmpty)return false;
         }
         fleet.put(shipType, ship);
         for(Coordinate c : ship.getOccupiedCoordinates().keySet()){
@@ -49,19 +61,28 @@ public class Player {
     * responds true if hit, else false
     * */
     public boolean respondToHit(Coordinate c){
-        if(selfBoard.containsKey(c)) {
+        if(selfBoard.get(c) > BoardConstants.selfBoardEmpty && selfBoard.get(c) < BoardConstants.selfBoardHit){
+            System.out.println("Player " + playerId + " has taken a hit " + c.toString());
             selfBoard.put(c, BoardConstants.selfBoardHit);
             for (Map.Entry<ShipType, Ship> e : fleet.entrySet()) {
                 Ship s = e.getValue();
                 if (s.getOccupiedCoordinates().containsKey(c)) {
                     s.updateShipState(c);
+                    if(s.isSunk()){
+                        System.out.println("Ship is sunk "+ s.getShipType());
+                    }
                     break;
                 }
             }
             return true;
         }
-        else{
+        else if(selfBoard.get(c) == BoardConstants.selfBoardEmpty){
+            System.out.println("Player " + playerId + " has taken a miss " + c.toString());
             selfBoard.put(c, BoardConstants.selfBoardMiss); // miss on self board
+            return false;
+        }
+        else{
+            System.out.println("Attempting to hit the same place which is previously hit or missed");
             return false;
         }
     }

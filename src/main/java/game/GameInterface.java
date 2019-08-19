@@ -14,4 +14,6 @@ public interface GameInterface {
     // prints the current status of the boards of the game
     public void printGameState();
 
+    public GameState getGameState();
+
 }

@@ -21,6 +21,8 @@ public class Game implements GameInterface{
         A = a;
         B = b;
         turnQueue = new LinkedList<>();
+        turnQueue.addLast(A);
+        turnQueue.addLast(B);
         Winner = null;
         gameState = GameState.RUNNING;
     }
@@ -41,8 +43,11 @@ public class Game implements GameInterface{
         if(opposite.checkIfLost()){
             gameState = GameState.WON;
             Winner = now;
+            System.out.println("Game is won by Player " + now.getPlayerId());
+            return ;
         }
         turnQueue.addLast(now);
+        printGameState();
     }
 
     public void printGameState(){
@@ -51,6 +56,14 @@ public class Game implements GameInterface{
 
         B.printSelfBoard();
         B.printOppositionBoard();
+        System.out.println("Current game state is " + gameId + " state: " + gameState);
+    }
+
+    public GameState getGameState(){
+        return gameState;
+    }
+    public Player getWinner(){
+        return Winner;
     }
 
 }

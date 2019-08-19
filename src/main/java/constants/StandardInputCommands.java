@@ -1,7 +1,6 @@
 package constants;
 
 public enum StandardInputCommands {
-    DRAWBOARD,
+    PRINTGAME ,
     NEWGAME,
-    FIRE
 }

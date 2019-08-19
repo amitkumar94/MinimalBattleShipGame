@@ -41,10 +41,6 @@ public abstract class Ship {
         return occupiedCoordinates;
     }
 
-    public void setOccupiedCoordinates(HashMap<Coordinate, ShipState> occupiedCoordinates) {
-        this.occupiedCoordinates = occupiedCoordinates;
-    }
-
     public Ship(){
         occupiedCoordinates = new HashMap<>();
         shipState  = ShipState.AFLOAT;
