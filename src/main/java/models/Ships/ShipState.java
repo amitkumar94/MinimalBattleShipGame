@@ -2,5 +2,7 @@ package models.Ships;
 
 public enum ShipState {
     HEALTHY,
-    HIT
+    HIT,
+    SUNK,
+    AFLOAT
 }

@@ -10,6 +10,7 @@ public abstract class Ship {
     int length ;
     ShipType shipType;
     ShipOrientation shipOrientation;
+    ShipState shipState;
     HashMap<Coordinate, ShipState> occupiedCoordinates;
 
     public int getLength() {
@@ -46,6 +47,7 @@ public abstract class Ship {
 
     public Ship(){
         occupiedCoordinates = new HashMap<>();
+        shipState  = ShipState.AFLOAT;
     }
 
     public void assignCoordinates(Coordinate source){
@@ -62,8 +64,11 @@ public abstract class Ship {
          }
     }
 
-    public void updateShipCoordinateStateToHit(Coordinate c){
-
+    public void updateShipState(Coordinate c){
+        occupiedCoordinates.put(c, ShipState.HIT);
+        if(isSunk()){
+            shipState = ShipState.SUNK;
+        }
     }
 
     public boolean isSunk(){
